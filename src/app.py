@@ -1,6 +1,9 @@
-from flask import Flask,jsonify,request
+from flask import Flask,jsonify,request,
+from modelsFlaskSQLAlchemy import db,User,Favorite,Episode,Character
+from flask_sqlalchey import SQLAlchemy
 
 app=Flask(__name__)
+db.init_app(app)
 
 @app.route('/',methods=['GET'])
 def home():
