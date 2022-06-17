@@ -1,4 +1,4 @@
-from flask_sqlalchey import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 
 db=SQLAlchemy()
 
@@ -18,11 +18,11 @@ def serialize(self):
         "password": self.password
     }
 
-class Favorite(db.Model):'
+class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id')) 
-    episode = db.Column(db.String(250), ForeignKey('episode.name'))
-    character = db.Column(db.String(250), ForeignKey('character.name'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 
+    episode = db.Column(db.String(250), db.ForeignKey('episode.name'))
+    character = db.Column(db.String(250), db.ForeignKey('character.name'))
 
 def __repr__(self):
     return "<Favorite %>" % self.name #no se cual va aqui
@@ -35,12 +35,12 @@ def serialize(self):
         "character": self.character
     }
 
-class Episode(Base):
-    id = db.Column(Integer, primary_key=True)
-    episode = db.Column(String(250))
-    name = db.Column(String(250))
-    character = db.Column(String(250))
-    air_date=db.Column(String(250)) 
+class Episode(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    episode = db.Column(db.String(250))
+    name = db.Column(db.String(250))
+    character = db.Column(db.String(250))
+    air_date=db.Column(db.String(250)) 
     favorite = db.relationship('Favorite', back_populates='episode') 
 
 def __repr__(self):
@@ -51,11 +51,11 @@ def serialize(self):
         "id":self.id,
         "user_id": self.user_id,
         "episode": self.episode,
-        "character": self.character
+        "character": self.character,
         "air_date": self.air_date
     }
 
-class Character(Base):
+class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250))
     status = db.Column(db.String(250))
