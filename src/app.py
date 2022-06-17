@@ -18,5 +18,12 @@ def set_favorite_char():
     return jsonify(characters) 
 
 
+@app.route('/delete_favorite_char/<int:id>',methods=['DELETE']) #PENDIENTE ingresa character a favoritos
+def delete_favorite_char():
+    #len(todos)
+    #todos.pop(0)
+    return jsonify(characters) 
+
+
 if __name__ == "__main__":
     app.run(host="localhost",port="5000")
