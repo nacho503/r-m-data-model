@@ -16,13 +16,27 @@ db.init_app(app) #conexion con base de datos
 CORS(app) # no tengamos errores de cors
 Migrate(app,db) #migra y crea base de datos
 
-# @app.route('/',methods=['GET'])
-# def home():
-#     return 'Home page'
+
+@app.route('/post_user',methods=['POST'])
+def post_user():
+    user = User()
+    user.name = request.json.get("name")
+    user.password = request.json.get("password")
+
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify(user.serialize()),200
+
+@app.route('/users',methods=['GET'])
+def all_users():
+    users=User.query.all()
+    users=list(map(lambda user: user.serialize(),users))
+    return jsonify(users.serialize()),200 
 
 # @app.route('/characters',methods=['GET']) #recibe todos los personajes
 # def get_character():
-#     return jsonify(characters) 
+#     return jsonify(user.serialize()),200 
 
 
 # @app.route('/set_favorite_char',methods=['PUT']) #PENDIENTE ingresa character a favoritos
