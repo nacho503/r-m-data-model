@@ -32,12 +32,7 @@ def post_user():
 def all_users():
     users=User.query.all()
     users=list(map(lambda user: user.serialize(),users))
-    return jsonify(users.serialize()),200 
-
-# @app.route('/characters',methods=['GET']) #recibe todos los personajes
-# def get_character():
-#     return jsonify(user.serialize()),200 
-
+    return jsonify(users),200 
 
 # @app.route('/set_favorite_char',methods=['PUT']) #PENDIENTE ingresa character a favoritos
 # def set_favorite_char():
