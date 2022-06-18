@@ -34,18 +34,22 @@ def all_users():
     users=list(map(lambda user: user.serialize(),users))
     return jsonify(users),200 
 
-# @app.route('/set_favorite_char',methods=['PUT']) #PENDIENTE ingresa character a favoritos
-# def set_favorite_char():
-#     #todo = request.json.get("todo")
-#     #todos.append(todo)
-#     return jsonify(characters) 
+@app.route('/put_user',methods=['PUT']) #PENDIENTE ingresa character a favoritos
+def put_user(id):
+    user=User.query.get(id)
+    user.password = request.json.get("password")
+    user.password = request.json.get("name")
+    db.session.add(user)
+    db.session.commit()
+    return jsonify(user.serialize()),200 
 
 
-# @app.route('/delete_favorite_char/<int:id>',methods=['DELETE']) #PENDIENTE ingresa character a favoritos
-# def delete_favorite_char():
-#     #len(todos)
-#     #todos.pop(0)
-#     return jsonify(characters) 
+@app.route('/delete_user/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    user=User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify('Borrado'),200
 
 
 if __name__ == "__main__":
